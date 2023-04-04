@@ -25,7 +25,7 @@ my $EGGNOG_DAT_URL = "http://eggnogdb.embl.de/download/eggnog_4.5/data/NOG/NOG.a
 my $GENE_ONTOLOGY_DAT_URL = "http://purl.obolibrary.org/obo/go/go-basic.obo";
 my $PFAM_DAT_URL = "ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz";
 my $PFAM2GO_DAT_URL = "http://current.geneontology.org/ontology/external2go/pfam2go";
-
+# 如果下载pfam2go得到pfam2go.txt，需要重命名为pfam2go
 
 main: {
 
