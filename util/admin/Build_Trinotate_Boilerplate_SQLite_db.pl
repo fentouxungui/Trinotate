@@ -19,7 +19,8 @@ my $UTILDIR = "$FindBin::RealBin/util";
 my $RESOURCES_DIR = "$FindBin::RealBin/../../resources";
 
 ## Resources:
-my $SPROT_DAT_URL = "ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz";
+# 使用第三方工具下载以下文件
+my $SPROT_DAT_URL = "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz";
 my $EGGNOG_DAT_URL = "http://eggnogdb.embl.de/download/eggnog_4.5/data/NOG/NOG.annotations.tsv.gz";
 my $GENE_ONTOLOGY_DAT_URL = "http://purl.obolibrary.org/obo/go/go-basic.obo";
 my $PFAM_DAT_URL = "ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz";
@@ -47,7 +48,7 @@ main: {
     
 
     ## process Sprot dat file
-    $pipeliner->add_commands(new Command("wget \"$SPROT_DAT_URL\" -O uniprot_sprot.dat.gz", "wget_sprot_dat.ok") );
+    # $pipeliner->add_commands(new Command("wget \"$SPROT_DAT_URL\" -O uniprot_sprot.dat.gz", "wget_sprot_dat.ok") );
 
     $pipeliner->add_commands(new Command("$UTILDIR/EMBL_swissprot_parser.pl uniprot_sprot.dat.gz $prefix", "parse_sprot_dat.ok"));
     
@@ -69,7 +70,7 @@ main: {
 
     ##########
     ## EGGNOG
-    $pipeliner->add_commands(new Command("wget \"$EGGNOG_DAT_URL\" -O NOG.annotations.tsv.gz", "eggnog_download.ok") );
+    # $pipeliner->add_commands(new Command("wget \"$EGGNOG_DAT_URL\" -O NOG.annotations.tsv.gz", "eggnog_download.ok") );
     
     # extract fields
     $pipeliner->add_commands(new Command("gunzip -c NOG.annotations.tsv.gz | $UTILDIR/print.pl 1 5 > NOG.annotations.tsv.gz.bulk_load",
@@ -83,7 +84,7 @@ main: {
     ################
     ## Gene ontology
 
-    $pipeliner->add_commands(new Command("wget \"$GENE_ONTOLOGY_DAT_URL\" -O go-basic.obo", "go_download.ok"));
+    # $pipeliner->add_commands(new Command("wget \"$GENE_ONTOLOGY_DAT_URL\" -O go-basic.obo", "go_download.ok"));
 
     $pipeliner->add_commands(new Command("$UTILDIR/obo_to_tab.pl go-basic.obo > go-basic.obo.tab",
                                          "go_obo_to_tab.ok"));
@@ -104,7 +105,7 @@ main: {
     ##############
     ## Pfam
 
-    $pipeliner->add_commands(new Command("wget \"$PFAM_DAT_URL\" -O Pfam-A.hmm.gz", "download_pfam.ok"));
+    # $pipeliner->add_commands(new Command("wget \"$PFAM_DAT_URL\" -O Pfam-A.hmm.gz", "download_pfam.ok"));
     
     $pipeliner->add_commands(new Command("$UTILDIR/PFAM_dat_parser.pl Pfam-A.hmm.gz", "pfam_parsing.ok"));
     
@@ -115,8 +116,8 @@ main: {
     #############
     ## Pfam2Go
 
-    $pipeliner->add_commands(new Command("wget \"$PFAM2GO_DAT_URL\" -O pfam2go",
-                                         "pfam2go_download.ok") );
+    #$pipeliner->add_commands(new Command("wget \"$PFAM2GO_DAT_URL\" -O pfam2go",
+    #                                     "pfam2go_download.ok") );
 
     $pipeliner->add_commands(new Command("$UTILDIR/PFAMtoGoParser.pl pfam2go > pfam2go.tab",
                                          "pfam2go_tab.ok"));
